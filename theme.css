@@ -4008,3 +4008,77 @@
   font-weight: 600;
 }
 
+
+@import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css');
+
+/* --- Color Vars --- */
+:root {
+  --accent: 255, 255, 255;
+  --accent-off: 180, 180, 180;
+  --dark: 30, 30, 30;
+  --darkest: 10, 10, 10;
+  --dark-highlight: 50, 50, 50;
+  --dark-apparent: 80, 80, 80;
+}
+
+/* --- Branding --- */
+.adminDrawerLogo img { content: url("https://imgur.com/NzHtqjC.png") !important; }
+imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
+.pageTitleWithLogo {
+  background-image: url("https://imgur.com/NzHtqjC.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+
+/* --- Splash --- */
+.splashLogo { background-image: none !important; position: relative !important; }
+.splashLogo::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-image: url("https://i.imgur.com/NzHtqjC.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  pointer-events: none !important;
+  display: block !important;
+}
+@media (min-width: 992px) { .splashLogo::before { background-size: 60% auto !important; } }
+.splashLogo + .splashMessage, .progressring { opacity: 1 !important; }
+
+/* =========================
+   STATIC WALLPAPER (no backdrop)
+   - Keep your wallpaper
+   - Push it BEHIND all content so it never overlaps videos
+   ========================= */
+.layout-desktop .backgroundContainer:not(.withBackdrop) {
+  background: url("https://images.hdqwalls.com/wallpapers/black-shapes-5k-tk.jpg") no-repeat center center !important;
+  background-size: cover !important;
+
+  /* keep it behind everything so it can't cover videos/OSD/etc */
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;  /* don't block clicks */
+}
+
+/* =========================
+   DETAILS PAGE (with dynamic backdrop)
+   - Remove your static wallpaper so Jellyfin's backdrop shows
+   - Let Jellyfin keep its default positioning/stacking
+   ========================= */
+.layout-desktop .backgroundContainer.withBackdrop {
+  background-image: none !important;
+  background-color: transparent !important;
+
+  /* ensure the container isn't forced behind when a backdrop is active */
+  position: static !important;
+  z-index: auto !important;
+  pointer-events: none !important; /* safe: backdrops shouldn't capture clicks */
+}
+
+/* --- Login background --- */
+#loginPage {
+  background: url(https://i.redd.it/i2ozh2g925t71.jpg) !important;
+  background-size: cover !important;
+}
