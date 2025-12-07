@@ -15,13 +15,6 @@
     --rounding-large: 24px;
     --rounding-circle: 100px;
   }
- /* Global scaling for large displays like TVs */
-  html {
-    transform: scale(0.85);
-    transform-origin: top left;
-    width: 117.65%; /* Compensates for scale shrink to avoid margin clipping */
-    height: 117.65%;
-  }
 
   /*Style backdrop*/
   .backdropImage {
@@ -4083,50 +4076,9 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
   z-index: auto !important;
   pointer-events: none !important; /* safe: backdrops shouldn't capture clicks */
 }
-/* Custom background override for detail pages */
-.detailPageSecondaryContainer.padded-bottom-page {
-  background-color: transparent !important;
-  background-image: url("https://images.hdqwalls.com/wallpapers/black-shapes-5k-tk.jpg") !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
-}
 
 /* --- Login background --- */
 #loginPage {
   background: url(https://i.redd.it/i2ozh2g925t71.jpg) !important;
   background-size: cover !important;
-}
-
-
-/* ===============================================
-   Scaling rules for TV layout to reduce size
-   =============================================== */
-.layout-tv {
-  font-size: 0.75rem !important;            /* reduce base font size */
-  zoom: 0.85 !important;                    /* shrink entire interface */
-}
-
-.layout-tv .detailPagePrimaryContent {
-  padding: 1.5rem !important;
-}
-
-.layout-tv .detailPageSecondaryContainer {
-  padding: 1.2rem !important;
-}
-
-.layout-tv .mainDetailButtons {
-  transform: scale(0.85) !important;
-  transform-origin: left center !important;
-  margin-top: 0.5rem !important;
-}
-
-.layout-tv .detailTitle,
-.layout-tv .itemName {
-  font-size: 1.4rem !important;
-}
-
-.layout-tv .card {
-  transform: scale(0.8) !important;
-  transform-origin: top left !important;
 }
