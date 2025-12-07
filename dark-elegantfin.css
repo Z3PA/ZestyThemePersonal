@@ -1,0 +1,128 @@
+/* Z3PA ElegantFin variant
+ * Base: ElegantFin v25.11.25 by lscambo13
+ * Only colors + branding are overridden here.
+ */
+
+/* ---- Base ElegantFin theme + media-bar add-on ---- */
+@import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css");
+@import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css");
+
+/* ===================================================================
+   Z3PA OVERRIDES
+   =================================================================== */
+
+/* ---- Global palette tweaks (keep layout logic from ElegantFin) ---- */
+/* Main idea: make everything sit on very dark #05060a, but still let
+   ElegantFin handle backdrops, gradients, etc. */
+
+:root {
+  /* footer text */
+  --elegantFinFooterText: "Z3PA Theme";
+
+  /* Dark background stops */
+  --darkerGradientPoint: #05060a;
+  --lighterGradientPoint: #05060a;
+
+  /* Match the alphas to the new base so overlays stay consistent */
+  --darkerGradientPointAlpha: rgba(5, 6, 10, 0.92);
+  --lighterGradientPointAlpha: rgba(5, 6, 10, 0.90);
+  --gradientPointAlpha: rgba(5, 6, 10, 0.30);
+
+  /* Header / drawer blocks (top bar + side drawer) */
+  --headerColor: rgba(5, 6, 10, 0.92);
+  --drawerColor: rgba(5, 6, 10, 0.95);
+
+  /* Rebuild the gradients using the new dark colors */
+  --backgroundGradient: linear-gradient(
+    0deg,
+    var(--darkerGradientPoint) 35%,
+    var(--lighterGradientPoint)
+  );
+
+  --cardBackgroundGradient: linear-gradient(
+    0deg,
+    var(--darkerGradientPoint),
+    25%,
+    var(--lighterGradientPoint)
+  );
+
+  --headerColorGradient: linear-gradient(
+    180deg,
+    rgba(5, 6, 10, 0.95) 30%,
+    55%,
+    transparent 90%
+  );
+
+  --headerColorGradientAlt: linear-gradient(
+    180deg,
+    rgba(5, 6, 10, 1) 70%,
+    transparent
+  );
+
+  /* Optional: keep ElegantFin’s purple accent,
+     or change these for a different highlight color. */
+  /* Example Z3PA reddish accent: uncomment if you want it.
+  --uiAccentColor: rgb(239, 68, 68);
+  --activeColor:   rgb(239, 68, 68);
+  --activeColorAlpha: rgba(239, 68, 68, 0.9);
+  */
+}
+
+/* ===================================================================
+   Z3PA BRANDING
+   =================================================================== */
+
+/* Top-left admin drawer logo */
+.adminDrawerLogo img {
+  content: url("https://imgur.com/NzHtqjC.png") !important;
+}
+
+/* Some layouts use this icon element instead of the img above */
+imgLogoIcon {
+  content: url("https://imgur.com/NzHtqjC.png") !important;
+}
+
+/* Title logo in the web dashboard header */
+.pageTitleWithLogo {
+  background-image: url("https://imgur.com/NzHtqjC.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+}
+
+/* ---- Splash / login logo ---- */
+
+.splashLogo {
+  background-image: none !important;
+  position: relative !important;
+}
+
+/* Use ::before as a pure logo layer so ElegantFin’s layout stays intact */
+.splashLogo::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-image: url("https://i.imgur.com/NzHtqjC.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  pointer-events: none !important;
+  display: block !important;
+}
+
+/* Slightly smaller logo on big desktop screens so it doesn’t dominate */
+@media (min-width: 992px) {
+  .splashLogo::before {
+    background-size: 60% auto !important;
+  }
+}
+
+/* Make sure the spinner + “Sign in…” text are visible over the dark bg */
+.splashLogo + .splashMessage,
+.progressring {
+  opacity: 1 !important;
+}
+
+/* ===================================================================
+   END Z3PA OVERRIDES
+   =================================================================== */
