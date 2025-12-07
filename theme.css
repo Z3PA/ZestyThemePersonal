@@ -4082,25 +4082,3 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
   background: url(https://i.redd.it/i2ozh2g925t71.jpg) !important;
   background-size: cover !important;
 }
-
-/* Remove blur from the backdrop image */
-.backdropImage {
-  filter: saturate(120%) contrast(120%) brightness(40%) !important;;
-}
-
-/* Show wallpaper on detail pages behind the content (instead of grey) */
-.layout-desktop .detailPageWrapperContainer,
-.layout-desktop .detailSection {
-  background: url("https://images.hdqwalls.com/wallpapers/black-shapes-5k-tk.jpg") no-repeat center center !important;
-  background-size: cover !important;
-  background-color: transparent !important;
-}
-
-
-/* Make detail content area transparent to reveal the wallpaper behind */
-.layout-desktop .detailPagePrimaryContainer,
-.layout-desktop .detailPagePrimaryContent,
-.layout-desktop .detailPageContent,
-.layout-desktop .detailSectionContent {
-  background-color: transparent !important;
-}
