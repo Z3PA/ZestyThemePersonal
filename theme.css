@@ -15,6 +15,13 @@
     --rounding-large: 24px;
     --rounding-circle: 100px;
   }
+ /* Global scaling for large displays like TVs */
+  html {
+    transform: scale(0.85);
+    transform-origin: top left;
+    width: 117.65%; /* Compensates for scale shrink to avoid margin clipping */
+    height: 117.65%;
+  }
 
   /*Style backdrop*/
   .backdropImage {
