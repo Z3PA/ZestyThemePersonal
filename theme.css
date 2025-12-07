@@ -4076,6 +4076,14 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
   z-index: auto !important;
   pointer-events: none !important; /* safe: backdrops shouldn't capture clicks */
 }
+/* Custom background override for detail pages */
+.detailPageSecondaryContainer.padded-bottom-page {
+  background-color: transparent !important;
+  background-image: url("https://images.hdqwalls.com/wallpapers/black-shapes-5k-tk.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
 
 /* --- Login background --- */
 #loginPage {
