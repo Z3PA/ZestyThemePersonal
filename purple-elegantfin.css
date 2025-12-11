@@ -1,79 +1,45 @@
 /* ==========================================================
-   Z3PA ElegantFin – DARK + PURPLE ACCENT EDITION
+   Z3PA ElegantFin – Purple Tint Edition
    Base: ElegantFin v25.11.25
+   Goal: Same look as original (brightness, gradients),
+         but BLUE replaced with PURPLE.
    ========================================================== */
 
-/* ---- Base ElegantFin import ---- */
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css");
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css");
 
 /* ==========================================================
-   GLOBAL PURE DARK COLORS + PURPLE ACCENT
+   LIGHT–MEDIUM PURPLE COLOR PALETTE (replaces blue)
    ========================================================== */
 
 :root {
-  --z3pa-black: #050505;
-  --z3pa-charcoal: #0d0d0d;
-  --z3pa-softcharcoal: #141414;
+    /* Main purple tone (equivalent brightness to original blue) */
+    --accentPurple: #a76dff;
+    --accentPurpleDark: #7b41d8;
+    --accentPurpleAlpha: rgba(167, 109, 255, 0.35);
 
-  /* Purple shades */
-  --z3pa-purple: #a855f7;        /* Main purple */
-  --z3pa-purple-dark: #6b21a8;   /* Deeper purple */
-  --z3pa-purple-alpha: rgba(168, 85, 247, 0.35);
+    /* Replace ElegantFin’s accent variables */
+    --uiAccentColor: var(--accentPurple);
+    --activeColor: var(--accentPurple);
+    --activeColorAlpha: rgba(167, 109, 255, 0.65);
 
-  /* Override ElegantFin gradients (remove blue cast) */
-  --darkerGradientPoint: var(--z3pa-black);
-  --lighterGradientPoint: var(--z3pa-charcoal);
+    /* Button hover glow */
+    --buttonGlowPurple: 0 0 12px rgba(167, 109, 255, 0.55);
 
-  --darkerGradientPointAlpha: rgba(5, 5, 5, 0.92);
-  --lighterGradientPointAlpha: rgba(13, 13, 13, 0.90);
-  --gradientPointAlpha: rgba(20, 20, 20, 0.35);
+    /* Progress bars, sliders, tabs */
+    --themeAccent: var(--accentPurple);
 
-  /* Header + drawer */
-  --headerColor: rgba(10, 10, 10, 0.92);
-  --drawerColor: rgba(8, 8, 8, 0.96);
-
-  /* Updated gradients */
-  --backgroundGradient: linear-gradient(
-    0deg,
-    var(--z3pa-black) 35%,
-    var(--z3pa-charcoal)
-  );
-
-  --cardBackgroundGradient: linear-gradient(
-    0deg,
-    var(--z3pa-black),
-    25%,
-    var(--z3pa-charcoal)
-  );
-
-  --headerColorGradient: linear-gradient(
-    180deg,
-    rgba(10, 10, 10, 0.95) 30%,
-    55%,
-    transparent 90%
-  );
-
-  --headerColorGradientAlt: linear-gradient(
-    180deg,
-    rgba(10, 10, 10, 1) 70%,
-    transparent
-  );
-
-  /* ---- Purple Accents ---- */
-  --themeAccent: var(--z3pa-purple);
-  --uiAccentColor: var(--z3pa-purple);
-  --activeColor: var(--z3pa-purple);
-  --activeColorAlpha: var(--z3pa-purple-alpha);
-
-  --focusColor: var(--z3pa-purple);
-  --highlightColor: var(--z3pa-purple-dark);
-  --buttonGlow: 0 0 12px rgba(168, 85, 247, 0.65);
-  --buttonShadow: 0 0 18px rgba(168, 85, 247, 0.30);
+    /* ORIGINAL ElegantFin gradients preserved —
+       we only tint the highlight color, not the background */
+    --darkerGradientPoint: #0e0d12;     /* Original ElegantFin tone */
+    --lighterGradientPoint: #1b1a20;    /* Just slightly purple-shifted */
+    --darkerGradientPointAlpha: rgba(30, 27, 40, 0.92);
+    --lighterGradientPointAlpha: rgba(45, 42, 58, 0.90);
+    --gradientPointAlpha: rgba(70, 60, 100, 0.30);  /* blue → purple cast */
 }
 
 /* ==========================================================
-   Z3PA LOGO BRANDING
+   BRANDING
    ========================================================== */
 
 .adminDrawerLogo img {
@@ -88,108 +54,46 @@ imgLogoIcon {
   background-image: url("https://imgur.com/NzHtqjC.png") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
-  background-position: left center !important;
-}
-
-/* -------- Splash Logo -------- */
-
-.splashLogo {
-  background-image: none !important;
-  position: relative !important;
-}
-
-.splashLogo::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  background-image: url("https://i.imgur.com/NzHtqjC.png") !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-  pointer-events: none !important;
-  display: block !important;
-}
-
-@media (min-width: 992px) {
-  .splashLogo::before {
-    background-size: 60% auto !important;
-  }
-}
-
-.splashLogo + .splashMessage,
-.progressring {
-  opacity: 1 !important;
 }
 
 /* ==========================================================
-   PURE DARK PAGE BACKGROUND (backdrops stay visible)
+   PURPLE ACCENT STYLING
    ========================================================== */
 
-html, body,
-.skinBody,
-.page,
-.section,
-.verticalSection,
-.padded-left-page,
-.padded-right-page {
-  background-color: var(--z3pa-black) !important;
-  background-image: none !important;
-}
-
-/* Allow detail-page backdrop */
-.detailPageWrapper,
-.itemDetailPage,
-.backdropContainer,
-.backdropContainer::before,
-.mainDetailPage {
-  background: transparent !important;
-}
-
-/* ==========================================================
-   PURPLE ACCENT ELEMENT STYLING
-   ========================================================== */
-
-.button-flat,
-.button-flat:hover,
-.emby-button:hover {
-  color: var(--z3pa-purple) !important;
+.emby-button,
+.button-flat {
+  color: var(--accentPurple) !important;
 }
 
 .emby-button:hover {
-  box-shadow: var(--buttonShadow) !important;
+  box-shadow: var(--buttonGlowPurple) !important;
 }
 
-.playstatebutton-icon {
-  color: var(--z3pa-purple) !important;
-}
-
+.playstatebutton-icon,
 .selectedItem,
 .actionSheetMenuItem:hover {
-  background: var(--z3pa-purple-alpha) !important;
+  color: var(--accentPurple) !important;
+  background-color: var(--accentPurpleAlpha) !important;
 }
 
-/* Focus ring */
 :focus {
-  outline: 2px solid var(--z3pa-purple) !important;
-  outline-offset: 3px !important;
+  outline-color: var(--accentPurple) !important;
 }
 
-/* Slider / progress bars */
-.sliderBubble,
 .mdl-slider__background-lower,
+.mdl-slider__background-upper,
 .mdl-slider::-webkit-slider-thumb {
-  background-color: var(--z3pa-purple) !important;
+  background-color: var(--accentPurple) !important;
 }
 
 /* ==========================================================
-   REMOVE ALL STRIPES / LINES
+   Remove ALL separating lines (no white/blue/gray bars)
    ========================================================== */
 
-.homePage .sectionTitleContainer,
-.homePage .section,
 .sectionTitleContainer,
-.emby-scroller-container {
-  border: 0 !important;
+.emby-scroller-container,
+.homePage .section {
+  border: none !important;
   box-shadow: none !important;
   margin: 0 !important;
   background: transparent !important;
@@ -197,12 +101,9 @@ html, body,
 
 .sectionTitleContainer::before,
 .sectionTitleContainer::after,
-.homePage .section::before,
-.homePage .section::after,
 .emby-scroller-container::before,
-.emby-scroller-container::after {
+.emby-scroller-container::after,
+.homePage .section::before,
+.homePage .section::after {
   content: none !important;
-  background: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
 }
