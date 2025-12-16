@@ -1,26 +1,44 @@
-/* ==========================================================
-   Z3PA – Dark ElegantFin (Black/Charcoal) + Player Fix
-   - Fixes: theme background overlaying video playback / controls
-   - Keeps: ElegantFin look, darker palette, Z3PA branding
-   ========================================================== */
-
-/* Base ElegantFin + plugin support */
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css");
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css");
 
 /* ==========================================================
-   Z3PA branding
+   Z3PA Dark ElegantFin override (safe: does NOT break playback)
+   - Dark gray/black tone (less blue)
+   - Z3PA branding
+   - Fixes: detail-page backdrop + video playback/OSD layering
    ========================================================== */
-.adminDrawerLogo img { content: url("https://i.imgur.com/NzHtqjC.png") !important; }
-imgLogoIcon { content: url("https://i.imgur.com/NzHtqjC.png") !important; }
 
-/* Splash (login) logo */
-.splashLogo { background-image: none !important; position: relative !important; }
+/* ---------- Z3PA branding ---------- */
+/* Use i.imgur direct links so Jellyfin can load the image as-is */
+:root {
+  --z3pa-logo: url("https://i.imgur.com/NzHtqjC.png");
+}
+
+.adminDrawerLogo img {
+  content: var(--z3pa-logo) !important;
+}
+
+.imgLogoIcon,
+img.imgLogoIcon {
+  content: var(--z3pa-logo) !important;
+}
+
+.pageTitleWithLogo {
+  background-image: var(--z3pa-logo) !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+}
+
+.splashLogo {
+  background-image: none !important;
+  position: relative !important;
+}
 .splashLogo::before {
   content: "" !important;
   position: absolute !important;
   inset: 0 !important;
-  background-image: url("https://i.imgur.com/NzHtqjC.png") !important;
+  background-image: var(--z3pa-logo) !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
@@ -31,141 +49,192 @@ imgLogoIcon { content: url("https://i.imgur.com/NzHtqjC.png") !important; }
   .splashLogo::before { background-size: 60% auto !important; }
 }
 
-/* ==========================================================
-   Darker palette (less blue, more charcoal)
-   ========================================================== */
-:root{
-  --z3pa-bg: #05060a;          /* main background */
-  --z3pa-bg2: #0b0d12;         /* slightly lifted panels */
-  --z3pa-panel: rgba(10,12,18,.78);
+/* ---------- Dark gray/black palette (less blue) ---------- */
+:root {
+  --z3pa-bg: #07080c;          /* main page bg */
+  --z3pa-bg2: #0d0f16;         /* header gradient end */
+  --z3pa-surface: rgba(18, 20, 28, .70); /* subtle surfaces */
+  --z3pa-surface2: rgba(18, 20, 28, .55);
   --z3pa-border: rgba(255,255,255,.06);
+  --z3pa-text: rgba(255,255,255,.92);
 }
 
-/* ==========================================================
-   IMPORTANT: only apply "flat background" on NON-PLAYBACK pages
-   (Playback uses .videoPlayerPage/.playbackPage and must stay transparent)
-   ========================================================== */
-.skinBody:not(.videoPlayerPage):not(.playbackPage),
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .page,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .mainDrawer,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .mainDrawer-scrollContainer,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .backgroundContainer:not(.backdropContainer),
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .padded-left-page,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .padded-right-page,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .detailPageContent {
+/* ---------- Page background (HOME/LIBRARY only) ---------- */
+/* IMPORTANT: Do NOT force background-color on detail pages or playback pages,
+   or it will cover the backdrop and/or video. */
+html, body, .skinBody {
   background-color: var(--z3pa-bg) !important;
 }
 
-/* Keep item/series DETAILS backdrop working (don’t paint over it) */
-.skinBody.itemDetailPage .backgroundContainer.backdropContainer,
-.skinBody.mainDetailPage .backgroundContainer.backdropContainer,
-.skinBody #itemDetailPage .backgroundContainer.backdropContainer {
-  background: none !important;
-  background-color: transparent !important;
+/* Home + library lists should be solid bg */
+.homePage,
+.libraryPage,
+.itemsView,
+.viewPanel,
+.pageContainer,
+.homePage .section,
+.homePage .verticalSection,
+.libraryPage .section,
+.libraryPage .verticalSection,
+.itemsContainer,
+.emby-scroller,
+.emby-scrollbuttons,
+.sectionTitleContainer {
+  background-color: var(--z3pa-bg) !important;
+  background-image: none !important;
 }
 
-/* Slightly darker headers (non-playback) */
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .appheader,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .header,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .headerTop{
-  background: linear-gradient(90deg, var(--z3pa-bg), #10131b) !important;
-  border-bottom: none !important;
+/* ---------- Header bar (keep ElegantFin style but less blue) ---------- */
+.appheader,
+.header,
+.headerTop {
+  background: linear-gradient(90deg, var(--z3pa-bg), var(--z3pa-bg2)) !important;
+  border-bottom: 0 !important;
   box-shadow: none !important;
 }
 
-/* Panels/cards tint */
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .cardBox,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .raised,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .paper-icon-button-light,
-.skinBody:not(.videoPlayerPage):not(.playbackPage) .dialog {
-  background-color: var(--z3pa-panel) !important;
-  border-color: var(--z3pa-border) !important;
+/* Side drawer + login background */
+.mainDrawer,
+.mainDrawer-scrollContainer,
+#loginPage,
+.loginPage {
+  background-color: var(--z3pa-bg) !important;
 }
 
-/* ==========================================================
-   VIDEO PLAYER HARD FIX (do not let theme wrappers cover the <video>)
-   ========================================================== */
-
-/* Make sure any background container becomes transparent + behind video */
-.skinBody.videoPlayerPage .backgroundContainer,
-.skinBody.playbackPage .backgroundContainer {
-  background: none !important;
-  background-color: transparent !important;
+/* ---------- NAV TABS: no container background ---------- */
+.headerTabs,
+.viewTabs,
+.viewNav,
+.pageTabContent,
+.pageTabContent > div,
+.pageTabContent-inner,
+.headerTabs .tabs,
+.viewTabs .tabs {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
   box-shadow: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
 }
 
-/* Ensure the actual video is on top of the background layer */
-.skinBody.videoPlayerPage video,
-.skinBody.playbackPage video,
-.skinBody.videoPlayerPage .videoPlayerContainer,
-.skinBody.playbackPage .videoPlayerContainer,
-.skinBody.videoPlayerPage .videoPlayer,
-.skinBody.playbackPage .videoPlayer {
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-/* OSD / controls must be above video */
-.skinBody.videoPlayerPage .videoOsd,
-.skinBody.playbackPage .videoOsd,
-.skinBody.videoPlayerPage .osdWrapper,
-.skinBody.playbackPage .osdWrapper,
-.skinBody.videoPlayerPage .videoOsdBottom,
-.skinBody.playbackPage .videoOsdBottom,
-.skinBody.videoPlayerPage .videoOsdTop,
-.skinBody.playbackPage .videoOsdTop {
-  z-index: 5 !important;
-  pointer-events: auto !important;
-}
-
-/* Reset OSD layout so it stays top/bottom (prevents the “giant bar in the middle”) */
-.skinBody.videoPlayerPage .videoOsd,
-.skinBody.playbackPage .videoOsd {
-  position: absolute !important;
-  inset: 0 !important;
+/* ---------- Fix the "strip/line" between rows on Home ---------- */
+/* The blue strip you see is usually the section title container background/margins. */
+.homePage .sectionTitleContainer,
+.homePage .sectionTitleContainer.sectionTitleContainer-cards {
   background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.skinBody.videoPlayerPage .osdWrapper,
-.skinBody.playbackPage .osdWrapper {
-  position: absolute !important;
-  inset: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: space-between !important;
-  background: transparent !important;
-}
-
-/* Remove any theme “wash” overlays */
-.skinBody.videoPlayerPage .osdWrapper::before,
-.skinBody.videoPlayerPage .osdWrapper::after,
-.skinBody.playbackPage .osdWrapper::before,
-.skinBody.playbackPage .osdWrapper::after {
-  content: none !important;
-}
-
-/* Optional: subtle gradients just behind the controls (not over the whole video) */
-.skinBody.videoPlayerPage .videoOsdTop,
-.skinBody.playbackPage .videoOsdTop {
-  background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0)) !important;
-}
-.skinBody.videoPlayerPage .videoOsdBottom,
-.skinBody.playbackPage .videoOsdBottom {
-  background: linear-gradient(to top, rgba(0,0,0,.60), rgba(0,0,0,0)) !important;
-}
-
-/* ==========================================================
-   HOME ROW “THIN LINE” / STRIP (remove margin that creates it)
-   ========================================================== */
+/* Remove the negative/positive margins that create a visible seam (your devtools showed ~11px). */
+.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-left,
+.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-right,
 .homePage .sectionTitleContainer.sectionTitleContainer-cards {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-left {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+
+/* Some builds draw the seam using borders/shadows on the wrapper */
+.homePage .sectionTitleContainer,
+.homePage .sectionTitleContainer *,
+.homePage .emby-scroller-container,
+.homePage .emby-scroller-container * {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
 }
+
+/* ---------- DO NOT KILL BACKDROPS ON DETAIL PAGES ---------- */
+/* Undo any “solid background” on item/detail pages so the backdrop can show. */
+.mainDetailPage,
+.itemDetailPage,
+#itemDetailPage,
+.detailPageContent {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* If you still want the detail page readable, add a *soft* overlay instead of a solid bg. */
+.mainDetailPage::before,
+.itemDetailPage::before,
+#itemDetailPage::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: radial-gradient(120% 90% at 50% 35%, rgba(0,0,0,.35) 0%, rgba(0,0,0,.78) 60%, rgba(0,0,0,.92) 100%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+/* Make sure the detail page content sits above that overlay */
+.mainDetailPage > *,
+.itemDetailPage > *,
+#itemDetailPage > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ---------- PLAYBACK FIXES (video + controls) ---------- */
+/* Never paint an opaque background over the playback surface */
+.videoOsdPage,
+.videoOsdPage .skinBody,
+.videoOsdPage .backgroundContainer,
+.videoOsdPage .pageContainer,
+.videoOsdPage .mainAnimatedPage,
+.videoOsdPage .page {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Ensure the actual video is not covered by overlays */
+.videoPlayerContainer,
+.videoPlayerContainer video,
+.videoPlayerContainer .videoPlayer {
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+/* Force OSD controls ABOVE the video */
+.videoOsdPage .osdHeader,
+.videoOsdPage .osdControls,
+.videoOsdPage .osdFooter,
+.videoOsdPage .videoOsdBottom,
+.videoOsdPage .videoOsdTop,
+.videoOsdPage .paper-icon-button-light,
+.videoOsdPage .mdl-slider__container,
+.videoOsdPage .sliderContainer,
+.videoOsdPage .emby-scrollbuttons {
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+/* Some themes add overlays using pseudo-elements — disable them on the playback page */
+.videoOsdPage::before,
+.videoOsdPage::after,
+.videoPlayerContainer::before,
+.videoPlayerContainer::after {
+  content: none !important;
+}
+
+/* Keep text readable on dark playback */
+.videoOsdPage,
+.videoOsdPage * {
+  text-shadow: none !important;
+}
+
+/* ---------- Small polish: reduce leftover blue-ish surfaces ---------- */
+.cardBox,
+.raised,
+.paperList,
+.paperListItem,
+.dialog,
+.formDialogHeader,
+.formDialogFooter {
+  background-color: var(--z3pa-surface) !important;
+  border-color: var(--z3pa-border) !important;
+}
+
