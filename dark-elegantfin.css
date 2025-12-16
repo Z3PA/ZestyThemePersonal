@@ -1,6 +1,5 @@
 /* ==========================================================
    Z3PA ElegantFin – DARK BLACK / CHARCOAL VARIANT
-   Base: ElegantFin v25.11.25
    ========================================================== */
 
 /* ---- Base ElegantFin import ---- */
@@ -55,25 +54,14 @@
     rgba(10, 10, 10, 1) 70%,
     transparent
   );
-
-  /* OPTIONAL: Z3PA Accent (Red) — uncomment to enable
-  --uiAccentColor: rgb(220, 38, 38);
-  --activeColor: rgb(220, 38, 38);
-  --activeColorAlpha: rgba(220, 38, 38, 0.9);
-  */
 }
 
 /* ==========================================================
    Z3PA LOGO BRANDING
    ========================================================== */
 
-.adminDrawerLogo img {
-  content: url("https://imgur.com/NzHtqjC.png") !important;
-}
-
-imgLogoIcon {
-  content: url("https://imgur.com/NzHtqjC.png") !important;
-}
+.adminDrawerLogo img { content: url("https://imgur.com/NzHtqjC.png") !important; }
+imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
 
 .pageTitleWithLogo {
   background-image: url("https://imgur.com/NzHtqjC.png") !important;
@@ -82,13 +70,8 @@ imgLogoIcon {
   background-position: left center !important;
 }
 
-/* -------- Splash Logo -------- */
-
-.splashLogo {
-  background-image: none !important;
-  position: relative !important;
-}
-
+/* Splash logo */
+.splashLogo { background-image: none !important; position: relative !important; }
 .splashLogo::before {
   content: "" !important;
   position: absolute !important;
@@ -100,75 +83,88 @@ imgLogoIcon {
   pointer-events: none !important;
   display: block !important;
 }
-
 @media (min-width: 992px) {
-  .splashLogo::before {
-    background-size: 60% auto !important;
-  }
+  .splashLogo::before { background-size: 60% auto !important; }
 }
-
 .splashLogo + .splashMessage,
-.progressring {
-  opacity: 1 !important;
-}
+.progressring { opacity: 1 !important; }
 
 /* ==========================================================
-   PURE DARK PAGE BACKGROUND (does NOT affect detail backdrops)
+   PLAYBACK-SAFE BACKGROUNDS
    ========================================================== */
 
-html, body,
-.skinBody,
-.page,
-.section,
-.verticalSection,
-.padded-left-page,
-.padded-right-page {
+/* Only set the app “shell” background.
+   IMPORTANT: Do NOT force background colors on .page/.section globally,
+   because the video player/nowPlaying view relies on those containers. */
+html, body, .skinBody {
+  background-color: var(--z3pa-black) !important;
+}
+
+/* Keep Home/Library dark without touching the player pages */
+.homePage,
+.libraryPage,
+.homePage .page,
+.libraryPage .page,
+.homePage .section,
+.libraryPage .section,
+.homePage .verticalSection,
+.libraryPage .verticalSection,
+.homePage .itemsContainer,
+.libraryPage .itemsContainer,
+.homePage .sectionTitleContainer,
+.libraryPage .sectionTitleContainer {
   background-color: var(--z3pa-black) !important;
   background-image: none !important;
 }
 
-/* ==========================================================
-   ALLOW ITEM DETAIL BACKDROP TO SHOW
-   (This was the part causing your problem)
-   ========================================================== */
-
-.detailPageWrapper,
-.itemDetailPage,
-.backdropContainer,
-.backdropContainer::before,
-.mainDetailPage {
+/* Allow item detail backdrops to render (scope to detail pages only) */
+.itemDetailPage .detailPageWrapper,
+.itemDetailPage .backdropContainer,
+.itemDetailPage .backdropContainer::before,
+.itemDetailPage .mainDetailPage {
   background: transparent !important;
 }
 
-/* DO NOT blanket-force background on detail pages */
-.mainDetailPage .pageContent,
-#itemDetailPage {
+/* And specifically do NOT paint over the Now Playing page */
+.nowPlayingPage,
+.nowPlayingPage .page,
+.nowPlayingPage .section,
+.nowPlayingPage .verticalSection,
+.nowPlayingPage .backgroundContainer,
+.nowPlayingPage .backgroundContainer::before {
   background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* ==========================================================
-   NO LINES / NO STRIPES ANYWHERE
+   HOME ONLY: remove stray “lines/stripes” without breaking other pages
    ========================================================== */
 
 .homePage .sectionTitleContainer,
-.homePage .section,
-.sectionTitleContainer,
-.emby-scroller-container {
+.homePage .sectionTitleContainer-cards,
+.homePage .emby-scroller-container,
+.homePage .section {
   border: 0 !important;
   box-shadow: none !important;
-  margin: 0 !important;
-  background: transparent !important;
 }
 
-/* Remove pseudo-element stripes */
-.sectionTitleContainer::before,
-.sectionTitleContainer::after,
+.homePage .sectionTitleContainer::before,
+.homePage .sectionTitleContainer::after,
 .homePage .section::before,
 .homePage .section::after,
-.emby-scroller-container::before,
-.emby-scroller-container::after {
+.homePage .emby-scroller-container::before,
+.homePage .emby-scroller-container::after {
   content: none !important;
   background: none !important;
   border: 0 !important;
   box-shadow: none !important;
+}
+
+/* If ElegantFin adds vertical spacing between carousels that reveals a tint,
+   you can zero these without touching the player: */
+.homePage .sectionTitleContainer.sectionTitleContainer-cards,
+.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-left,
+.homePage .emby-scroller-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
