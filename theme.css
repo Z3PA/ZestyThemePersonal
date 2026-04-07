@@ -4054,12 +4054,10 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
 .layout-desktop .backgroundContainer:not(.withBackdrop) {
   background: url("https://images.hdqwalls.com/wallpapers/black-shapes-5k-tk.jpg") no-repeat center center !important;
   background-size: cover !important;
-
-  /* keep it behind everything so it can't cover videos/OSD/etc */
   position: fixed !important;
   inset: 0 !important;
   z-index: -1 !important;
-  pointer-events: none !important;  /* don't block clicks */
+  pointer-events: none !important;
 }
 
 /* =========================
@@ -4069,14 +4067,9 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
    ========================= */
 .layout-desktop .backgroundContainer.withBackdrop {
   background-image: none !important;
-  background-color: transparent !important;
-
-  /* ensure the container isn't forced behind when a backdrop is active */
-  position: static !important;
-  z-index: auto !important;
-  pointer-events: none !important; /* safe: backdrops shouldn't capture clicks */
+  /* Remove position: static and z-index: auto — let Jellyfin manage these */
+  pointer-events: none !important;
 }
-
 /* --- Login background --- */
 #loginPage {
   background: url(https://i.redd.it/i2ozh2g925t71.jpg) !important;
