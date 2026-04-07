@@ -242,5 +242,5 @@ body.libraryDocument .backgroundContainer {
 #videoOsdPage .videoPlayerContainer video,
 .videoPlayerContainer video,
 video.htmlvideoplayer {
-  pointer-events: none !important;
+  pointer-events: auto !important;
 }
