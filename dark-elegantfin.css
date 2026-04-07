@@ -179,76 +179,21 @@ html, body, .skinBody {
 }
 
 /* ---------- PLAYBACK FIXES (video + controls) ---------- */
-/* Never paint an opaque background over the playback surface */
-.videoOsdPage,
-.videoOsdPage .skinBody,
-.videoOsdPage .backgroundContainer,
-.videoOsdPage .pageContainer,
-.videoOsdPage .mainAnimatedPage,
-.videoOsdPage .page {
-  background: transparent !important;
-  background-color: transparent !important;
-}
 
-/* Ensure the actual video is not covered by overlays */
-.videoPlayerContainer,
-.videoPlayerContainer video,
-.videoPlayerContainer .videoPlayer {
-  position: relative !important;
-  z-index: 0 !important;
-}
-
-/* Force OSD controls ABOVE the video */
-.videoOsdPage .osdHeader,
-.videoOsdPage .osdControls,
-.videoOsdPage .osdFooter,
-.videoOsdPage .videoOsdBottom,
-.videoOsdPage .videoOsdTop,
-.videoOsdPage .paper-icon-button-light,
-.videoOsdPage .mdl-slider__container,
-.videoOsdPage .sliderContainer,
-.videoOsdPage .emby-scrollbuttons {
-  position: relative !important;
-  z-index: 9999 !important;
-}
-
-/* Some themes add overlays using pseudo-elements — disable them on the playback page */
-.videoOsdPage::before,
-.videoOsdPage::after,
-.videoPlayerContainer::before,
-.videoPlayerContainer::after {
-  content: none !important;
-}
-
-/* Keep text readable on dark playback */
-.videoOsdPage,
-.videoOsdPage * {
-  text-shadow: none !important;
-}
-
-/* ---------- Small polish: reduce leftover blue-ish surfaces ---------- */
-.cardBox,
-.raised,
-.paperList,
-.paperListItem,
-.dialog,
-.formDialogHeader,
-.formDialogFooter {
-  background-color: var(--z3pa-surface) !important;
-  border-color: var(--z3pa-border) !important;
-}
-
-/* ── PLAYER PAGE FIX ── */
+/* The player page is identified by #videoOsdPage */
 #videoOsdPage ~ .backgroundContainer,
 body.libraryDocument .backgroundContainer {
   display: none !important;
 }
 
-#itemDetailPage::before,
-.mainDetailPage::before,
-.itemDetailPage::before {
+/* The ::before overlay covers the video — disable it during playback */
+body.libraryDocument #itemDetailPage::before,
+body.libraryDocument .mainDetailPage::before,
+body.libraryDocument .itemDetailPage::before {
   display: none !important;
 }
+
+/* Make sure the video container is on top */
 .videoPlayerContainer {
   position: fixed !important;
   z-index: 1 !important;
@@ -258,6 +203,7 @@ body.libraryDocument .backgroundContainer {
   height: 100% !important;
 }
 
+/* OSD controls above the video */
 #videoOsdPage .videoOsdBottom,
 #videoOsdPage .osdHeader,
 #videoOsdPage .skinHeader {
@@ -265,8 +211,17 @@ body.libraryDocument .backgroundContainer {
   z-index: 100 !important;
 }
 
+/* Prevent the body bg from showing through */
 #videoOsdPage,
 #videoOsdPage .page {
   background: transparent !important;
   background-color: transparent !important;
+}
+
+/* Some themes add overlays using pseudo-elements — disable on playback */
+.videoOsdPage::before,
+.videoOsdPage::after,
+.videoPlayerContainer::before,
+.videoPlayerContainer::after {
+  content: none !important;
 }
