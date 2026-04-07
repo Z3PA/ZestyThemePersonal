@@ -1,30 +1,72 @@
+/* ==========================================================
+   Z3PA ElegantFin – DARK BLACK / CHARCOAL VARIANT
+   Base: ElegantFin v25.11.25
+   ========================================================== */
+
+/* ---- Base ElegantFin import ---- */
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css");
 @import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css");
 
 /* ==========================================================
-   Z3PA Dark ElegantFin override (safe: does NOT break playback)
-   - Dark gray/black tone (less blue)
-   - Z3PA branding
-   - Fixes: detail-page backdrop + video playback/OSD layering
+   GLOBAL PURE DARK COLORS (No Blue Tint)
    ========================================================== */
 
-/* ---------- Z3PA branding ---------- */
-/* Use i.imgur direct links so Jellyfin can load the image as-is */
 :root {
-  --z3pa-logo: url("https://i.imgur.com/NzHtqjC.png");
+  --z3pa-black: #050505;
+  --z3pa-charcoal: #0d0d0d;
+  --z3pa-softcharcoal: #141414;
+
+  --darkerGradientPoint: var(--z3pa-black);
+  --lighterGradientPoint: var(--z3pa-charcoal);
+
+  --darkerGradientPointAlpha: rgba(5, 5, 5, 0.92);
+  --lighterGradientPointAlpha: rgba(13, 13, 13, 0.90);
+  --gradientPointAlpha: rgba(20, 20, 20, 0.35);
+
+  --headerColor: rgba(10, 10, 10, 0.92);
+  --drawerColor: rgba(8, 8, 8, 0.96);
+
+  --backgroundGradient: linear-gradient(
+    0deg,
+    var(--z3pa-black) 35%,
+    var(--z3pa-charcoal)
+  );
+
+  --cardBackgroundGradient: linear-gradient(
+    0deg,
+    var(--z3pa-black),
+    25%,
+    var(--z3pa-charcoal)
+  );
+
+  --headerColorGradient: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.95) 30%,
+    55%,
+    transparent 90%
+  );
+
+  --headerColorGradientAlt: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 1) 70%,
+    transparent
+  );
 }
+
+/* ==========================================================
+   Z3PA LOGO BRANDING
+   ========================================================== */
 
 .adminDrawerLogo img {
-  content: var(--z3pa-logo) !important;
+  content: url("https://imgur.com/NzHtqjC.png") !important;
 }
 
-.imgLogoIcon,
-img.imgLogoIcon {
-  content: var(--z3pa-logo) !important;
+imgLogoIcon {
+  content: url("https://imgur.com/NzHtqjC.png") !important;
 }
 
 .pageTitleWithLogo {
-  background-image: var(--z3pa-logo) !important;
+  background-image: url("https://imgur.com/NzHtqjC.png") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: left center !important;
@@ -34,166 +76,134 @@ img.imgLogoIcon {
   background-image: none !important;
   position: relative !important;
 }
+
 .splashLogo::before {
   content: "" !important;
   position: absolute !important;
   inset: 0 !important;
-  background-image: var(--z3pa-logo) !important;
+  background-image: url("https://i.imgur.com/NzHtqjC.png") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
   pointer-events: none !important;
   display: block !important;
 }
+
 @media (min-width: 992px) {
-  .splashLogo::before { background-size: 60% auto !important; }
+  .splashLogo::before {
+    background-size: 60% auto !important;
+  }
 }
 
-/* ---------- Dark gray/black palette (less blue) ---------- */
-:root {
-  --z3pa-bg: #07080c;          /* main page bg */
-  --z3pa-bg2: #0d0f16;         /* header gradient end */
-  --z3pa-surface: rgba(18, 20, 28, .70); /* subtle surfaces */
-  --z3pa-surface2: rgba(18, 20, 28, .55);
-  --z3pa-border: rgba(255,255,255,.06);
-  --z3pa-text: rgba(255,255,255,.92);
+.splashLogo + .splashMessage,
+.progressring {
+  opacity: 1 !important;
 }
 
-/* ---------- Page background (HOME/LIBRARY only) ---------- */
-/* IMPORTANT: Do NOT force background-color on detail pages or playback pages,
-   or it will cover the backdrop and/or video. */
-html, body, .skinBody {
-  background-color: var(--z3pa-bg) !important;
-}
+/* ==========================================================
+   PURE DARK PAGE BACKGROUND (does NOT affect detail backdrops)
+   ========================================================== */
 
-/* Home + library lists should be solid bg */
-.homePage,
-.libraryPage,
-.itemsView,
-.viewPanel,
-.pageContainer,
-.homePage .section,
-.homePage .verticalSection,
-.libraryPage .section,
-.libraryPage .verticalSection,
-.itemsContainer,
-.emby-scroller,
-.emby-scrollbuttons,
-.sectionTitleContainer {
-  background-color: var(--z3pa-bg) !important;
+html, body,
+.skinBody,
+.page,
+.section,
+.verticalSection,
+.padded-left-page,
+.padded-right-page {
+  background-color: var(--z3pa-black) !important;
   background-image: none !important;
 }
 
-/* ---------- Header bar (keep ElegantFin style but less blue) ---------- */
-.appheader,
-.header,
-.headerTop {
-  background: linear-gradient(90deg, var(--z3pa-bg), var(--z3pa-bg2)) !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-}
+/* ==========================================================
+   ALLOW ITEM DETAIL BACKDROP TO SHOW
+   ========================================================== */
 
-/* Side drawer + login background */
-.mainDrawer,
-.mainDrawer-scrollContainer,
-#loginPage,
-.loginPage {
-  background-color: var(--z3pa-bg) !important;
-}
-
-/* ---------- NAV TABS: no container background ---------- */
-.headerTabs,
-.viewTabs,
-.viewNav,
-.pageTabContent,
-.pageTabContent > div,
-.pageTabContent-inner,
-.headerTabs .tabs,
-.viewTabs .tabs {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-/* ---------- Fix the "strip/line" between rows on Home ---------- */
-/* The blue strip you see is usually the section title container background/margins. */
-.homePage .sectionTitleContainer,
-.homePage .sectionTitleContainer.sectionTitleContainer-cards {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* Remove the negative/positive margins that create a visible seam (your devtools showed ~11px). */
-.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-left,
-.homePage .sectionTitleContainer.sectionTitleContainer-cards.padded-right,
-.homePage .sectionTitleContainer.sectionTitleContainer-cards {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-/* Some builds draw the seam using borders/shadows on the wrapper */
-.homePage .sectionTitleContainer,
-.homePage .sectionTitleContainer *,
-.homePage .emby-scroller-container,
-.homePage .emby-scroller-container * {
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-}
-
-/* ---------- DO NOT KILL BACKDROPS ON DETAIL PAGES ---------- */
-/* Undo any “solid background” on item/detail pages so the backdrop can show. */
-.mainDetailPage,
+.detailPageWrapper,
 .itemDetailPage,
-#itemDetailPage,
-.detailPageContent {
+.backdropContainer,
+.backdropContainer::before,
+.mainDetailPage {
   background: transparent !important;
-  background-color: transparent !important;
 }
 
-/* If you still want the detail page readable, add a *soft* overlay instead of a solid bg. */
-.mainDetailPage::before,
-.itemDetailPage::before,
-#itemDetailPage::before {
-  content: "" !important;
+.mainDetailPage .pageContent,
+#itemDetailPage {
+  background: transparent !important;
+}
+
+/* Static wallpaper on pages without a backdrop */
+.layout-desktop .backgroundContainer:not(.withBackdrop) {
   position: fixed !important;
   inset: 0 !important;
-  background: radial-gradient(120% 90% at 50% 35%, rgba(0,0,0,.35) 0%, rgba(0,0,0,.78) 60%, rgba(0,0,0,.92) 100%) !important;
+  z-index: -1 !important;
   pointer-events: none !important;
-  z-index: 0 !important;
-}
-/* Make sure the detail page content sits above that overlay */
-.mainDetailPage > *,
-.itemDetailPage > *,
-#itemDetailPage > * {
-  position: relative !important;
-  z-index: 1 !important;
 }
 
-/* ---------- PLAYBACK FIXES (video + controls) ---------- */
+/* Details page — let Jellyfin's backdrop through untouched */
+.layout-desktop .backgroundContainer.withBackdrop {
+  background-image: unset !important;
+  background-color: transparent !important;
+  pointer-events: none !important;
+}
 
-/* The player page is identified by #videoOsdPage */
+/* Restore backdrop on detail pages */
+.layout-desktop .itemBackdrop {
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+}
+
+#itemDetailPage .layout-desktop .itemBackdrop {
+  background-image: unset !important;
+}
+
+/* ==========================================================
+   NO LINES / NO STRIPES ANYWHERE
+   ========================================================== */
+
+.homePage .sectionTitleContainer,
+.homePage .section,
+.sectionTitleContainer,
+.emby-scroller-container {
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.sectionTitleContainer::before,
+.sectionTitleContainer::after,
+.homePage .section::before,
+.homePage .section::after,
+.emby-scroller-container::before,
+.emby-scroller-container::after {
+  content: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================
+   PLAYBACK FIXES
+   ========================================================== */
+
+/* Hide background container during playback */
 #videoOsdPage ~ .backgroundContainer,
 body.libraryDocument .backgroundContainer {
   display: none !important;
 }
 
-/* The ::before overlay covers the video — disable it during playback */
-body.libraryDocument #itemDetailPage::before,
-body.libraryDocument .mainDetailPage::before,
-body.libraryDocument .itemDetailPage::before {
+/* Disable the ::before overlay that covers the video */
+#itemDetailPage::before,
+.mainDetailPage::before,
+.itemDetailPage::before {
   display: none !important;
 }
 
-/* Make sure the video container is on top */
+/* Video container stacking */
 .videoPlayerContainer {
   position: fixed !important;
   z-index: 1 !important;
@@ -211,17 +221,26 @@ body.libraryDocument .itemDetailPage::before {
   z-index: 100 !important;
 }
 
-/* Prevent the body bg from showing through */
+/* Transparent background during playback */
 #videoOsdPage,
 #videoOsdPage .page {
   background: transparent !important;
   background-color: transparent !important;
 }
 
-/* Some themes add overlays using pseudo-elements — disable on playback */
+/* Disable pseudo-element overlays on playback page */
 .videoOsdPage::before,
 .videoOsdPage::after,
 .videoPlayerContainer::before,
 .videoPlayerContainer::after {
   content: none !important;
+}
+
+/* Prevent tap-to-pause on video */
+#videoOsdPage video,
+#videoOsdPage .videoPlayerContainer,
+#videoOsdPage .videoPlayerContainer video,
+.videoPlayerContainer video,
+video.htmlvideoplayer {
+  pointer-events: none !important;
 }
