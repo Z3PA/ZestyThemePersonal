@@ -41,14 +41,14 @@
 	  width: 34em;
   }
 
-  .layout-desktop .itemBackdrop {
-    background-attachment: scroll;
-    background-position: center;
-    background-image: none !important;
-    background-size: cover;
-    height: 100vh;
-    position: relative;
-  }
+.layout-desktop .itemBackdrop {
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+}
+
   .layout-tv .backgroundContainer, 
   .layout-desktop .backgroundContainer {
     background-size: cover !important; /* fix for gradient on 2K and 4K displays */
@@ -4066,8 +4066,8 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
    - Let Jellyfin keep its default positioning/stacking
    ========================= */
 .layout-desktop .backgroundContainer.withBackdrop {
-  background-image: none !important;
-  /* Remove position: static and z-index: auto — let Jellyfin manage these */
+  background-image: unset !important;
+  background-color: transparent !important;
   pointer-events: none !important;
 }
 /* --- Login background --- */
