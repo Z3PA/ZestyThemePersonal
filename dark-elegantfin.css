@@ -190,9 +190,9 @@ html, body,
    PLAYBACK FIXES
    ========================================================== */
 
-/* Hide background container during playback */
-#videoOsdPage ~ .backgroundContainer,
-body.libraryDocument .backgroundContainer {
+/* Only hide background during playback, not globally */
+#videoOsdPage .backgroundContainer,
+#videoOsdPage ~ .backgroundContainer {
   display: none !important;
 }
 
@@ -236,7 +236,7 @@ body.libraryDocument .backgroundContainer {
   content: none !important;
 }
 
-/* Prevent tap-to-pause on video */
+/* Ensure video receives clicks normally */
 #videoOsdPage video,
 #videoOsdPage .videoPlayerContainer,
 #videoOsdPage .videoPlayerContainer video,
