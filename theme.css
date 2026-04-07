@@ -44,6 +44,7 @@
 .layout-desktop .itemBackdrop {
   background-attachment: scroll;
   background-position: center;
+  background-image: none !important;
   background-size: cover;
   height: 100vh;
   position: relative;
@@ -4045,7 +4046,10 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
 }
 @media (min-width: 992px) { .splashLogo::before { background-size: 60% auto !important; } }
 .splashLogo + .splashMessage, .progressring { opacity: 1 !important; }
-
+#itemDetailPage .layout-desktop .itemBackdrop,
+.layout-desktop #itemDetailPage .itemBackdrop {
+  background-image: unset !important;
+}
 /* =========================
    STATIC WALLPAPER (no backdrop)
    - Keep your wallpaper
