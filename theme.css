@@ -4074,6 +4074,10 @@ imgLogoIcon { content: url("https://imgur.com/NzHtqjC.png") !important; }
   background-color: transparent !important;
   pointer-events: none !important;
 }
+.detailPageContent {
+  background: transparent !important;
+  background-color: transparent !important;
+}
 /* --- Login background --- */
 #loginPage {
   background: url(https://i.redd.it/i2ozh2g925t71.jpg) !important;
