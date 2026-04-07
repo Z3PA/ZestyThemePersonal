@@ -238,3 +238,35 @@ html, body, .skinBody {
   border-color: var(--z3pa-border) !important;
 }
 
+/* ── PLAYER PAGE FIX ── */
+#videoOsdPage ~ .backgroundContainer,
+body.libraryDocument .backgroundContainer {
+  display: none !important;
+}
+
+#itemDetailPage::before,
+.mainDetailPage::before,
+.itemDetailPage::before {
+  display: none !important;
+}
+.videoPlayerContainer {
+  position: fixed !important;
+  z-index: 1 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#videoOsdPage .videoOsdBottom,
+#videoOsdPage .osdHeader,
+#videoOsdPage .skinHeader {
+  position: fixed !important;
+  z-index: 100 !important;
+}
+
+#videoOsdPage,
+#videoOsdPage .page {
+  background: transparent !important;
+  background-color: transparent !important;
+}
